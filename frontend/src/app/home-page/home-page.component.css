@@ -1,0 +1,102 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero {
+  background-size: cover;
+  background-position: center;
+  color: black;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.hero .btn {
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 50px;
+}
+
+p {
+  font-size: 1.2em;
+  color: #555;
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  background-color: #f3f3f3;
+  padding: 35px;
+}
+.section img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+}
+.section h2 {
+  font-size: 2em;
+  color: #444;
+}
+.section p {
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* Get Started Section */
+.get-started-section {
+  background-color: #333;
+  color: #fff;
+  padding: 50px 20px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+.get-started-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+.get-started-section p {
+  font-size: 1.2em;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+.get-started-section .btn-login {
+  padding: 15px 30px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  text-decoration: none;
+}
+.get-started-section .btn-login:hover {
+  background-color: #218838;
+}
+
+
+
+/* Responsive design */
+@media (min-width: 768px) {
+  .section {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .section img {
+    max-width: 250px;
+  }
+  .section p {
+    max-width: 500px;
+  }
+}
