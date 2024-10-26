@@ -1,0 +1,55 @@
+.carousel-item img {
+  width: 600px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.exercise-cards {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.card {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
+}
+
+.card h6 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon-highlight {
+  font-size: 1.2em;
+  color: #6c757d;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.icon-highlight:hover {
+  color: #007bff;
+  transform: scale(1.3);
+}
+
+.icon-highlight {
+  font-size: 1.2em;
+  color: #6c757d;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.icon-highlight:hover {
+  color: #007bff;
+  transform: scale(1.3);
+}
+
