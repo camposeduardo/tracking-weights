@@ -5,6 +5,7 @@ import com.camposeduardo.trackingweights.api.RegisterRequest;
 import com.camposeduardo.trackingweights.entities.User;
 import com.camposeduardo.trackingweights.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,15 +21,15 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Cookie login(LoginRequest request) {
+    public String login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        return generateCookie(jwtToken);
+        String jwtToken = jwtService.generateToken(user);
+        return jwtToken;
     }
 
-    public Cookie register(RegisterRequest request) {
+    public void register(RegisterRequest request) {
 
         // check if the email exists
         if (checkEmail(request.getEmail())) {
@@ -42,22 +43,22 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-
-        return generateCookie(jwtToken);
     }
 
     public boolean checkEmail(String email){
         return this.userRepository.findByEmail(email).isPresent();
     }
 
-    public Cookie generateCookie(String token) {
-        Cookie jwtCookie = new Cookie("jwt", token);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
-        jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(600);
+    public ResponseCookie generateCookie(String token) {
+        ResponseCookie cookie = ResponseCookie.from("jwt", token)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(600)
+                .sameSite("Strict")
+                .build();
 
-        return jwtCookie;
+
+        return cookie;
     }
 }

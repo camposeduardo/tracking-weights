@@ -30,7 +30,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String token = null;
 
-        // Procurar o token no cookie
         if (request.getCookies() == null) {
             filterChain.doFilter(request, response);
             return;
