@@ -18,10 +18,7 @@ export class AuthenticationService {
   }
 
   login(request: LoginRequest) {
-    return this.http.post<string>(`${environment.apiUrl}/login`, request, { withCredentials: true }).subscribe((data) => {
-      // temporary solution
-      sessionStorage.setItem("isLogged", "true");
-    });;
+    return this.http.post<string>(`${environment.apiUrl}/login`, request, { withCredentials: true })
   }
 
   // temporary solution

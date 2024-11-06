@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ErrorMessage } from '../../models/ErrorMessage';
 
 @Component({
   selector: 'login-form',
@@ -17,7 +18,10 @@ export class LoginFormComponent {
   signInForm!: FormGroup;
   registerForm!: FormGroup;
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  loginErrorMessage: string | null = null;
+  registerErrorMessage: string | null = null;
+
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -33,13 +37,33 @@ export class LoginFormComponent {
   }
 
   onSubmitSignIn() {
-    this.authService.login(this.signInForm.value)
+    this.authService.login(this.signInForm.value).subscribe({
+      next: (data) => {
+        // temporary solution
+        sessionStorage.setItem("isLogged", "true");
+        this.router.navigate(['/home']);
+
+      }, error: (error: ErrorMessage) => {
+        this.loginErrorMessage = error.message;
+      }
+    });;
   }
 
   onCreateAccount() {
-    this.authService.register(this.registerForm.value).subscribe((data) => {
-      console.log(data);
+    this.authService.register(this.registerForm.value).subscribe({
+      next: () => {
+        document.getElementById('closeModal')!.click();
+        this.registerForm.reset();
+      },
+
+      error: (error: ErrorMessage) => {
+        this.registerErrorMessage = error.message;
+      }
     });
+  }
+
+  closeAlert(alert: string) {
+    alert === 'login' ? this.loginErrorMessage = null : this.registerErrorMessage = null
   }
 
 }

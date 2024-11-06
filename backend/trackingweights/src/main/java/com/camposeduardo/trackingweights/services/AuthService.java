@@ -3,6 +3,8 @@ package com.camposeduardo.trackingweights.services;
 import com.camposeduardo.trackingweights.api.LoginRequest;
 import com.camposeduardo.trackingweights.api.RegisterRequest;
 import com.camposeduardo.trackingweights.entities.User;
+import com.camposeduardo.trackingweights.exceptions.UserAlreadyExistsException;
+import com.camposeduardo.trackingweights.exceptions.UserNotFoundException;
 import com.camposeduardo.trackingweights.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
@@ -22,18 +24,17 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public String login(LoginRequest request) {
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        String jwtToken = jwtService.generateToken(user);
-        return jwtToken;
+        return jwtService.generateToken(user);
     }
 
     public void register(RegisterRequest request) {
 
         // check if the email exists
-        if (checkEmail(request.getEmail())) {
-
+        if (checkIfEmailIsAlreadyInUse(request.getEmail())) {
+            throw new UserAlreadyExistsException();
         }
 
         var user = User.builder()
@@ -45,7 +46,7 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public boolean checkEmail(String email){
+    public boolean checkIfEmailIsAlreadyInUse(String email){
         return this.userRepository.findByEmail(email).isPresent();
     }
 
