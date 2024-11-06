@@ -54,7 +54,6 @@ p {
   line-height: 1.5;
 }
 
-/* Get Started Section */
 .get-started-section {
   background-color: #333;
   color: #fff;
@@ -84,8 +83,6 @@ p {
 .get-started-section .btn-login:hover {
   background-color: #218838;
 }
-
-
 
 /* Responsive design */
 @media (min-width: 768px) {

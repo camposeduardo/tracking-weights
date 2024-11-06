@@ -41,7 +41,7 @@ export class LoginFormComponent {
       next: (data) => {
         // temporary solution
         sessionStorage.setItem("isLogged", "true");
-        this.router.navigate(['/home']);
+        this.router.navigate(['/app']);
 
       }, error: (error: ErrorMessage) => {
         this.loginErrorMessage = error.message;

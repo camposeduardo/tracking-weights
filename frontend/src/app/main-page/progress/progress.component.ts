@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CarouselComponent } from "./carousel/carousel.component";
-import { NavbarProgressComponent } from "../navbar-progress/navbar-progress.component";
+import { NavbarProgressComponent } from "./navbar-progress/navbar-progress.component";
+import { CardExerciseComponent } from "./card-exercise/card-exercise.component";
 
 @Component({
   selector: 'progress-app',
   standalone: true,
-  imports: [CarouselComponent, NavbarProgressComponent],
+  imports: [NavbarProgressComponent, CardExerciseComponent],
   templateUrl: './progress.component.html',
   styleUrl: './progress.component.css'
 })
