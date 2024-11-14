@@ -40,7 +40,7 @@ export class LoginFormComponent {
     this.authService.login(this.signInForm.value).subscribe({
       next: (data) => {
         // temporary solution
-        sessionStorage.setItem("isLogged", "true");
+        sessionStorage.setItem("is_logged", "true");
         this.router.navigate(['/app']);
 
       }, error: (error: ErrorMessage) => {
