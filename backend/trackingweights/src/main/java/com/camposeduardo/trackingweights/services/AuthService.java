@@ -32,7 +32,6 @@ public class AuthService {
 
     public void register(RegisterRequest request) {
 
-        // check if the email exists
         if (checkIfEmailIsAlreadyInUse(request.getEmail())) {
             throw new UserAlreadyExistsException();
         }
@@ -52,13 +51,12 @@ public class AuthService {
 
     public ResponseCookie generateCookie(String token) {
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
-                .httpOnly(true)
-                .secure(true)
+                .httpOnly(false) // change to true later
+                .secure(false) // change to true later
                 .path("/")
-                .maxAge(600)
+                .maxAge(900)
                 .sameSite("Strict")
                 .build();
-
 
         return cookie;
     }

@@ -30,7 +30,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .headers(HeadersConfigurer::disable)
                 .authorizeHttpRequests(
                         (requests) -> requests
-                                .requestMatchers("/login", "/h2-console/**", "/register")
+                                .requestMatchers("/login", "/register")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )
