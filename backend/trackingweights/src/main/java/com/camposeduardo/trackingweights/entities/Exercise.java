@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Exercise {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
