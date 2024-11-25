@@ -1,0 +1,76 @@
+<h2 class="text-center mt-3">Add Exercise</h2>
+<form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="exerciseName">Exercise Name:</label>
+    <input
+      type="text"
+      id="exerciseName"
+      formControlName="exerciseName"
+      placeholder="Enter exercise name"
+    />
+    <small *ngIf="exerciseForm.get('exerciseName')?.invalid && exerciseForm.get('exerciseName')?.touched">
+      Exercise name is required
+    </small>
+  </div>
+
+
+  <div>
+    <label for="date">Date:</label>
+    <input
+      type="date"
+      id="date"
+      formControlName="date"
+    />
+    <small *ngIf="exerciseForm.get('date')?.invalid && exerciseForm.get('date')?.touched">
+      Date is required
+    </small>
+  </div>
+
+
+  <div>
+    <label for="weight">Weight (kg):</label>
+    <input
+      type="number"
+      id="weight"
+      formControlName="weight"
+      placeholder="Enter weight"
+    />
+    <small *ngIf="exerciseForm.get('weight')?.invalid && exerciseForm.get('weight')?.touched">
+      Weight must be greater than 0
+    </small>
+  </div>
+
+
+  <div>
+    <label for="reps">Reps:</label>
+    <input
+      type="number"
+      id="reps"
+      formControlName="reps"
+      placeholder="Enter reps"
+    />
+    <small *ngIf="exerciseForm.get('reps')?.invalid && exerciseForm.get('reps')?.touched">
+      Reps must be greater than 0
+    </small>
+  </div>
+
+
+  <div>
+    <label for="muscleGroup">Muscle Group:</label>
+    <select id="muscleGroup" formControlName="muscleGroup">
+      <option value="">Select a muscle group</option>
+      <option *ngFor="let group of muscleGroups" [value]="group">{{ group }}</option>
+    </select>
+    <small *ngIf="exerciseForm.get('muscleGroup')?.invalid && exerciseForm.get('muscleGroup')?.touched">
+      Muscle group is required
+    </small>
+  </div>
+
+
+  <div>
+    <button type="submit" [disabled]="exerciseForm.invalid">Save</button>
+    <button type="button" (click)="onCancel()">Cancel</button>
+
+  </div>
+</form>
