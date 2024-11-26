@@ -3,58 +3,11 @@
 
   <div>
     <label for="exerciseName">Exercise Name:</label>
-    <input
-      type="text"
-      id="exerciseName"
-      formControlName="exerciseName"
-      placeholder="Enter exercise name"
-    />
+    <input type="text" id="exerciseName" formControlName="exerciseName" placeholder="Enter exercise name" />
     <small *ngIf="exerciseForm.get('exerciseName')?.invalid && exerciseForm.get('exerciseName')?.touched">
       Exercise name is required
     </small>
   </div>
-
-
-  <div>
-    <label for="date">Date:</label>
-    <input
-      type="date"
-      id="date"
-      formControlName="date"
-    />
-    <small *ngIf="exerciseForm.get('date')?.invalid && exerciseForm.get('date')?.touched">
-      Date is required
-    </small>
-  </div>
-
-
-  <div>
-    <label for="weight">Weight (kg):</label>
-    <input
-      type="number"
-      id="weight"
-      formControlName="weight"
-      placeholder="Enter weight"
-    />
-    <small *ngIf="exerciseForm.get('weight')?.invalid && exerciseForm.get('weight')?.touched">
-      Weight must be greater than 0
-    </small>
-  </div>
-
-
-  <div>
-    <label for="reps">Reps:</label>
-    <input
-      type="number"
-      id="reps"
-      formControlName="reps"
-      placeholder="Enter reps"
-    />
-    <small *ngIf="exerciseForm.get('reps')?.invalid && exerciseForm.get('reps')?.touched">
-      Reps must be greater than 0
-    </small>
-  </div>
-
 
   <div>
     <label for="muscleGroup">Muscle Group:</label>
@@ -67,10 +20,39 @@
     </small>
   </div>
 
+  <div>
+    <label for="weight">Weight:</label>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <input type="number" id="weight" formControlName="weight" placeholder="Enter weight" />
+      <select formControlName="unit">
+        <option value="kg">kg</option>
+        <option value="lbs">lbs</option>
+      </select>
+    </div>
+    <small *ngIf="exerciseForm.get('weight')?.invalid && exerciseForm.get('weight')?.touched">
+      Weight must be greater than 0
+    </small>
+  </div>
+
+  <div>
+    <label for="reps">Reps:</label>
+    <input type="number" id="reps" formControlName="reps" placeholder="Enter reps" />
+    <small *ngIf="exerciseForm.get('reps')?.invalid && exerciseForm.get('reps')?.touched">
+      Reps must be greater than 0
+    </small>
+  </div>
+
+
+  <div>
+    <label for="date">Date:</label>
+    <input type="date" id="date" formControlName="date" />
+    <small *ngIf="exerciseForm.get('date')?.invalid && exerciseForm.get('date')?.touched">
+      Date is required
+    </small>
+  </div>
 
   <div>
     <button type="submit" [disabled]="exerciseForm.invalid">Save</button>
     <button type="button" (click)="onCancel()">Cancel</button>
-
   </div>
 </form>

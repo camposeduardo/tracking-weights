@@ -3,6 +3,7 @@ package com.camposeduardo.trackingweights.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,6 +31,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .headers(HeadersConfigurer::disable)
                 .authorizeHttpRequests(
                         (requests) -> requests
+                                // https://stackoverflow.com/questions/65074794/cross-domain-cookies-in-preflight-requests
+                                .requestMatchers(HttpMethod.OPTIONS, "/exercise/**").permitAll()
                                 .requestMatchers("/login", "/register")
                                 .permitAll()
                                 .anyRequest().authenticated()
@@ -44,7 +47,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:4200")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowCredentials(true);
     }
 }

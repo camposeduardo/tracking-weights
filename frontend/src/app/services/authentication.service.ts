@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { RegisterRequest } from '../models/RegisterRequest';
 import { environment } from '../../environments/environment.development';
 import { LoginRequest } from '../models/LoginRequest';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -11,10 +10,10 @@ import { Router } from '@angular/router';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   register(request: RegisterRequest) {
-    return this.http.post<string>(`${environment.apiUrl}/register`, request, { withCredentials: true });
+    return this.http.post<string>(`${environment.apiUrl}/register`, request);
   }
 
   login(request: LoginRequest) {

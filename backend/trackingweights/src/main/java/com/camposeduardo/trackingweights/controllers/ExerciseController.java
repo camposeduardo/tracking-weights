@@ -3,6 +3,7 @@ package com.camposeduardo.trackingweights.controllers;
 import com.camposeduardo.trackingweights.api.ExerciseResponse;
 import com.camposeduardo.trackingweights.entities.Exercise;
 import com.camposeduardo.trackingweights.services.ExerciseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,7 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
 
     @PostMapping("/add")
-    public ResponseEntity<ExerciseResponse> addExercise(@RequestBody Exercise exercise) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public ResponseEntity<ExerciseResponse> addExercise(@Valid @RequestBody Exercise exercise) {
         return ResponseEntity.status(HttpStatus.CREATED).body(exerciseService.addExercise(exercise));
     }
 }

@@ -32,11 +32,12 @@ export class AddExerciseDialogComponent {
   constructor(private dialogRef: MatDialogRef<AddExerciseDialogComponent>,
     private fb: FormBuilder) {
     this.exerciseForm = this.fb.group({
-      exerciseName: ['', Validators.required],
-      date: ['', Validators.required],
+      exerciseName: [null, Validators.required],
+      date: [null, Validators.required],
       weight: [null, [Validators.required, Validators.min(1)]],
+      unit: ['kg', Validators.required],
       reps: [null, [Validators.required, Validators.min(1)]],
-      muscleGroup: ['', Validators.required],
+      muscleGroup: [null, Validators.required],
     });
   }
 

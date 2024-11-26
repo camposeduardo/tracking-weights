@@ -15,7 +15,6 @@ public class ExerciseService {
     private final ExerciseMapper exerciseMapper;
 
     public ExerciseResponse addExercise(Exercise exercise) {
-        System.out.println("Exercise service");
 
         if (exercise == null) {
             return null; // change to an exception later
