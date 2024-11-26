@@ -45,9 +45,8 @@ public class Exercise {
     @Column(nullable = false)
     private String muscleGroup;
 
-    /*
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-     */
 }

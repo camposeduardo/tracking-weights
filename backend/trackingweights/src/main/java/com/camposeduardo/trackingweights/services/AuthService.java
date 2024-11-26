@@ -2,6 +2,7 @@ package com.camposeduardo.trackingweights.services;
 
 import com.camposeduardo.trackingweights.api.LoginRequest;
 import com.camposeduardo.trackingweights.api.RegisterRequest;
+import com.camposeduardo.trackingweights.entities.Exercise;
 import com.camposeduardo.trackingweights.entities.User;
 import com.camposeduardo.trackingweights.exceptions.UserAlreadyExistsException;
 import com.camposeduardo.trackingweights.exceptions.UserNotFoundException;
@@ -13,6 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.Cookie;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +45,9 @@ public class AuthService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
+
+        List<Exercise> exerciseList = new ArrayList<>();
+        user.setExercises(exerciseList);
 
         userRepository.save(user);
     }
