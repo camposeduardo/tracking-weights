@@ -17,12 +17,12 @@ export class AuthenticationService {
   }
 
   login(request: LoginRequest) {
-    return this.http.post<string>(`${environment.apiUrl}/login`, request, { withCredentials: true })
+    return this.http.post<string>(`${environment.apiUrl}/login`, request, { withCredentials: true });
   }
 
-  // temporary solution
-  isLoggedIn(): boolean | null {
-    return !!sessionStorage.getItem("isLogged");
+
+  isAuthenticated() {
+    return this.http.get<boolean>(`${environment.apiUrl}/auth/status`, { withCredentials: true });
   }
 
 }

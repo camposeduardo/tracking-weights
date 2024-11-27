@@ -37,4 +37,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @GetMapping("/auth/status")
+    public ResponseEntity<Boolean> checkAuthentication() {
+        return ResponseEntity.ok(authService.isAuthenticated());
+    }
+
 }

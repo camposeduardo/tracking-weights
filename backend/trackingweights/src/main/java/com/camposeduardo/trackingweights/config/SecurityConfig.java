@@ -33,7 +33,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         (requests) -> requests
                                 // https://stackoverflow.com/questions/65074794/cross-domain-cookies-in-preflight-requests
                                 .requestMatchers(HttpMethod.OPTIONS, "/exercise/**").permitAll()
-                                .requestMatchers("/login", "/register")
+                                .requestMatchers("/login", "/register", "/auth/status")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )

@@ -21,6 +21,8 @@ export class LoginFormComponent {
   loginErrorMessage: string | null = null;
   registerErrorMessage: string | null = null;
 
+
+
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
@@ -39,8 +41,6 @@ export class LoginFormComponent {
   onSubmitSignIn() {
     this.authService.login(this.signInForm.value).subscribe({
       next: (data) => {
-        // temporary solution
-        sessionStorage.setItem("is_logged", "true");
         this.router.navigate(['/app']);
 
       }, error: (error: ErrorMessage) => {
