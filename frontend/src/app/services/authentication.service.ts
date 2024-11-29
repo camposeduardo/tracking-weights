@@ -4,11 +4,17 @@ import { RegisterRequest } from '../models/RegisterRequest';
 import { environment } from '../../environments/environment.development';
 import { LoginRequest } from '../models/LoginRequest';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+  private userAuthenticationStatusSubject = new BehaviorSubject<boolean>(false);
+
+  public userAuthenticationStatus$ = this.userAuthenticationStatusSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -25,7 +31,15 @@ export class AuthenticationService {
   }
 
   isAuthenticated() {
-    return this.http.get<boolean>(`${environment.apiUrl}/auth/status`, { withCredentials: true });
+    return this.http.get<boolean>(`${environment.apiUrl}/auth/status`, { withCredentials: true }).pipe(
+      map((status) => {
+        this.setUserAuthencationStatus(status);
+        return status;
+      }));
+  }
+
+  setUserAuthencationStatus(isLogged: boolean) {
+    this.userAuthenticationStatusSubject.next(isLogged);
   }
 
 }

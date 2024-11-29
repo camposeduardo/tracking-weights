@@ -46,7 +46,7 @@ export class LoginFormComponent {
       }, error: (error: ErrorMessage) => {
         this.loginErrorMessage = error.message;
       }
-    });;
+    });
   }
 
   onCreateAccount() {
