@@ -1,5 +1,6 @@
 package com.camposeduardo.trackingweights.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,23 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 .requestMatchers("/login", "/register", "/auth/status")
                                 .permitAll()
                                 .anyRequest().authenticated()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        //.invalidateHttpSession(true) -> if the application is not stateless
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            /**
+                             * the default Spring Security /logout endpoint, was displaying
+                             * a CORS-related error. This is because the default
+                             * Spring Security /logout endpoint was not sending CORS headers by default.
+                             * Maybe ??? this is a limitation of how Spring Security's
+                             * default endpoint handles requests
+                             */
+                            response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+                            response.setHeader("Access-Control-Allow-Credentials", "true");
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                        .deleteCookies("jwt")
                 )
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

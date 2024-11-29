@@ -7,8 +7,11 @@
       </a>
 
     </div>
-    <!--
-    <a href="#" routerLink="" routerLinkActive="router-link-active" class="fw-bold"><i class="bi bi-gear-fill"></i></a>
-    -->
+
+    <a class="btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear-fill"></i></a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item"  (click)="onLogoutButton()">Logout</a>
+    </div>
   </div>
 </div>

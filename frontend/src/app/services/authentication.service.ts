@@ -20,6 +20,9 @@ export class AuthenticationService {
     return this.http.post<string>(`${environment.apiUrl}/login`, request, { withCredentials: true });
   }
 
+  logout() {
+    return this.http.post<any>(`${environment.apiUrl}/logout`, null, { withCredentials: true });
+  }
 
   isAuthenticated() {
     return this.http.get<boolean>(`${environment.apiUrl}/auth/status`, { withCredentials: true });
