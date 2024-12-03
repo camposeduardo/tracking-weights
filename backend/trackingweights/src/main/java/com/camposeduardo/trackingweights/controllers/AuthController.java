@@ -3,17 +3,15 @@ package com.camposeduardo.trackingweights.controllers;
 import com.camposeduardo.trackingweights.api.LoginRequest;
 import com.camposeduardo.trackingweights.api.RegisterRequest;
 import com.camposeduardo.trackingweights.services.AuthService;
-import com.camposeduardo.trackingweights.services.JwtService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpHeaders;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor

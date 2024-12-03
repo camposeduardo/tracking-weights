@@ -43,4 +43,26 @@ public class ExerciseService {
         return exerciseMapper.toResponse(exercise);
     }
 
+    public List<Exercise> getExercisesByMuscleGroup(String muscleGroup) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
+            return null; // change to an exception later
+        }
+
+        Optional<List<Exercise>> exercises = exerciseRepository.findByMuscleGroup(
+                 muscleGroup, user.get().getId());
+
+        if (exercises.isEmpty()) {
+            return null; // change to an exception later
+        }
+
+        return exercises.get();
+    }
+
 }
