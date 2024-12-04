@@ -1,6 +1,7 @@
 package com.camposeduardo.trackingweights.services;
 
 import com.camposeduardo.trackingweights.api.LoginRequest;
+import com.camposeduardo.trackingweights.api.LoginResponse;
 import com.camposeduardo.trackingweights.api.RegisterRequest;
 import com.camposeduardo.trackingweights.entities.Exercise;
 import com.camposeduardo.trackingweights.entities.User;
@@ -28,11 +29,12 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        return jwtService.generateToken(user);
+        String token = jwtService.generateToken(user);
+        return new LoginResponse(generateCookie(token));
     }
 
     public void register(RegisterRequest request) {

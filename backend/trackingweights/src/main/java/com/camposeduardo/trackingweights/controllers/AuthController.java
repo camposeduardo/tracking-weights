@@ -1,12 +1,12 @@
 package com.camposeduardo.trackingweights.controllers;
 
 import com.camposeduardo.trackingweights.api.LoginRequest;
+import com.camposeduardo.trackingweights.api.LoginResponse;
 import com.camposeduardo.trackingweights.api.RegisterRequest;
 import com.camposeduardo.trackingweights.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +21,9 @@ public class AuthController {
     
     @PostMapping("/login")
     public ResponseEntity<Void> login(@Valid @RequestBody LoginRequest request) {
-        String token = authService.login(request);
-        ResponseCookie cookie = authService.generateCookie(token);
-
+        LoginResponse loginRequest = authService.login(request);
         return ResponseEntity.ok()
-                .header("Set-Cookie", cookie.toString())
+                .header("Set-Cookie", loginRequest.cookie().toString())
                 .build();
     }
 
