@@ -13,4 +13,8 @@ export class ExerciseService {
   addExercise(exercise: Exercise) {
     return this.http.post<any>(`${environment.apiUrl}/exercise/add`, exercise, { withCredentials: true });
   }
+
+  getAllMuscleGroups() {
+    return this.http.get<any>(`${environment.apiUrl}/exercise/muscleGroups`, { withCredentials: true });
+  }
 }

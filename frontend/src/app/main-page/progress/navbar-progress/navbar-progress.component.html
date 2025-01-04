@@ -7,33 +7,9 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-center" id="navbarMuscles">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav" *ngFor="let muscle of muscleGroups">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Abs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Back</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Bíceps</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Chest</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Forearms</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Glutes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Legs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Shoulders</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Tríceps</a>
+          <a class="nav-link ps-2" href="#">{{muscle | titlecase }}</a>
         </li>
       </ul>
     </div>

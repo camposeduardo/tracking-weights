@@ -43,6 +43,10 @@ public class ExerciseService {
         return exerciseMapper.toResponse(exercise);
     }
 
+    public List<String> getAllMuscleGroups() {
+        return exerciseRepository.getAllMuscleGroups();
+    }
+
     public List<Exercise> getExercisesByMuscleGroup(String muscleGroup) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

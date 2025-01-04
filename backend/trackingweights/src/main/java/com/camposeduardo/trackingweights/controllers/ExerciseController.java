@@ -27,4 +27,9 @@ public class ExerciseController {
     public ResponseEntity<List<Exercise>> getExercisesByMuscleGroup(@PathVariable String muscleGroup) {
         return ResponseEntity.ok(exerciseService.getExercisesByMuscleGroup(muscleGroup));
     }
+
+    @GetMapping("/muscleGroups")
+    public ResponseEntity<List<String>> getAllMuscleGroups() {
+        return ResponseEntity.ok(exerciseService.getAllMuscleGroups());
+    }
 }
