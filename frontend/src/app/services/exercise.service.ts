@@ -2,11 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Exercise } from '../models/Exercise';
 import { environment } from '../../environments/environment.development';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExerciseService {
+
+  private cardExerciseDataSubject = new BehaviorSubject<Exercise[]>([]);
+  cardData = this.cardExerciseDataSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -17,4 +22,15 @@ export class ExerciseService {
   getAllMuscleGroups() {
     return this.http.get<any>(`${environment.apiUrl}/exercise/muscleGroups`, { withCredentials: true });
   }
+
+  getExercisesByMuscleGroup(muscleGroup: string) {
+    return this.http.get<any>(`${environment.apiUrl}/exercise/${muscleGroup}`, { withCredentials: true }).pipe(
+      map(response => {
+        this.cardExerciseDataSubject?.next(response)
+        return response;
+      }), (err) => {
+        return err;
+      });
+  }
+
 }

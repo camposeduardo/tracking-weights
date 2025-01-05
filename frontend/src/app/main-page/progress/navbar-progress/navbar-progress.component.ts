@@ -25,4 +25,8 @@ export class NavbarProgressComponent {
     });
   }
 
+  getExercisesByMuscleGroup(muscleGroup: string) {
+    this.exerciseService.getExercisesByMuscleGroup(muscleGroup).subscribe();
+  }
+
 }

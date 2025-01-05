@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,10 @@ public class ExerciseService {
 
     public List<Exercise> getExercisesByMuscleGroup(String muscleGroup) {
 
+        if (muscleGroup.isEmpty()) {
+            return null; // change to an exception later
+        }
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String email = authentication.getName();
@@ -60,7 +65,7 @@ public class ExerciseService {
         }
 
         Optional<List<Exercise>> exercises = exerciseRepository.findByMuscleGroup(
-                 muscleGroup, user.get().getId());
+                StringUtils.capitalize(muscleGroup), user.get().getId());
 
         if (exercises.isEmpty()) {
             return null; // change to an exception later
