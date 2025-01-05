@@ -17,19 +17,24 @@ export class ProgressComponent {
 
   constructor(private dialog: MatDialog, private exerciseService: ExerciseService) { }
 
+  ngOnInit() {
+    this.exerciseService.getAllMuscleGroups().subscribe({
+      next: (muscleGroup) => {
+        if (muscleGroup) {
+          this.exerciseService.getExercisesByMuscleGroup("ABS");
+        }
+      }
+    });
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open<AddExerciseDialogComponent, any, Exercise>(AddExerciseDialogComponent, {
       width: '25vw',
     });
-    dialogRef.afterClosed().subscribe((data: Exercise | undefined) => {
-      if (data) {
-        this.exerciseService.addExercise(data).subscribe({
-          next: (data) => {
-            console.log(data)
-          }
-        });
+    dialogRef.afterClosed().subscribe((exercise: Exercise | undefined) => {
+      if (exercise) {
+        this.exerciseService.addExercise(exercise).subscribe();
       }
     });
-
   }
 }

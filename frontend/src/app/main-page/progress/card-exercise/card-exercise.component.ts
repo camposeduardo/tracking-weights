@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Exercise } from '../../../models/Exercise';
 import { ExerciseService } from '../../../services/exercise.service';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'card-exercise',
@@ -13,11 +12,17 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class CardExerciseComponent {
 
-    exercises_data!: Observable<Exercise[]>;
+    exercises_data: Exercise[] = [];
 
     constructor(private exerciseService: ExerciseService) {}
 
     ngOnInit() {
-      this.exercises_data = this.exerciseService.cardData;
+      this.exerciseService.cardData.subscribe({
+        next: (exercises) => {
+          if (exercises) {
+            this.exercises_data = exercises;
+          }
+        }
+      });
     }
 }

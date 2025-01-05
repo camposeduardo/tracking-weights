@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse justify-content-center" id="navbarMuscles">
       <ul class="navbar-nav" *ngFor="let muscle of muscleGroups">
         <li class="nav-item">
-          <a class="nav-link ps-2" (click)="getExercisesByMuscleGroup(muscle)">{{muscle | titlecase }}</a>
+          <a [ngClass]="{active: muscle === 'ABS'}" class="nav-link ps-2" (click)="getExercisesByMuscleGroup(muscle)">{{muscle | titlecase }}</a>
         </li>
       </ul>
     </div>

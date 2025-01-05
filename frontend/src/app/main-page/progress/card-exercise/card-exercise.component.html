@@ -1,26 +1,29 @@
 <div class="container">
   <div class="row">
-
-    <div *ngFor="let exercise of exercises_data | async" class="col-6 col-md-4 col-lg-2 mb-3 mt-3">
-      <div class="card p-2" style="width: 100%;">
-
-        <div class="dropdown position-absolute" style="top: 5px; right: 5px;">
-          <i class="bi bi-three-dots-vertical icon-highlight" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false"></i>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
-            <a class="dropdown-item" href="#"><i class="bi bi-pencil-fill me-2"></i>Edit</a>
-            <a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Remove</a>
-          </div>
-        </div>
-
-        <div class="card-body p-2">
-          <h6 class="card-title mb-1">{{exercise.exerciseName}}</h6>
-          <p class="mb-1">Date: <strong>{{exercise.date}}</strong></p>
-          <p class="mb-1">Weight: <strong>{{exercise.weight}}</strong></p>
-          <p class="mb-1">Reps: <strong>{{exercise.reps}}</strong></p>
-        </div>
-      </div>
+    <div *ngIf="exercises_data.length === 0; else cards ">
+      <h1 class="text-center">Not found</h1>
     </div>
 
+    <ng-template #cards>
+      <div *ngFor="let exercise of exercises_data" class="col-6 col-md-4 col-lg-2 mb-3 mt-3">
+        <div class="card p-2" style="width: 100%;">
+          <div class="dropdown position-absolute" style="top: 5px; right: 5px;">
+            <i class="bi bi-three-dots-vertical icon-highlight" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"></i>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+              <a class="dropdown-item" href="#"><i class="bi bi-pencil-fill me-2"></i>Edit</a>
+              <a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Remove</a>
+            </div>
+          </div>
+
+          <div class="card-body p-2">
+            <h6 class="card-title mb-1">{{exercise.exerciseName}}</h6>
+            <p class="mb-1">Date: <strong>{{exercise.date}}</strong></p>
+            <p class="mb-1">Weight: <strong>{{exercise.weight}}</strong></p>
+            <p class="mb-1">Reps: <strong>{{exercise.reps}}</strong></p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>
