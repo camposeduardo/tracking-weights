@@ -24,12 +24,17 @@ public class ExerciseController {
     }
 
     @GetMapping("/{muscleGroup}")
-    public ResponseEntity<List<Exercise>> getExercisesByMuscleGroup(@PathVariable String muscleGroup) {
+    public ResponseEntity<List<ExerciseResponse>> getExercisesByMuscleGroup(@PathVariable String muscleGroup) {
         return ResponseEntity.ok(exerciseService.getExercisesByMuscleGroup(muscleGroup));
     }
 
     @GetMapping("/muscleGroups")
     public ResponseEntity<List<String>> getAllMuscleGroups() {
         return ResponseEntity.ok(exerciseService.getAllMuscleGroups());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ExerciseResponse>> getExercises(@RequestParam String search) {
+        return ResponseEntity.ok(exerciseService.findExercises(search));
     }
 }

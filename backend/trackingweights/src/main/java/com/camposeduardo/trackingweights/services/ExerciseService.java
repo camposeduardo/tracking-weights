@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ExerciseService {
 
+    private final AuthService authService;
     private final ExerciseRepository exerciseRepository;
     private final UserRepository userRepository;
     private final ExerciseMapper exerciseMapper;
@@ -29,26 +31,42 @@ public class ExerciseService {
             return null; // change to an exception later
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = authService.getUser();
 
-        String email = authentication.getName();
+        exercise.setUser(user);
+        exerciseRepository.save(exercise);
+        return exerciseMapper.toResponse(exercise);
+    }
 
-        Optional<User> user = userRepository.findByEmail(email);
+    public List<ExerciseResponse> findExercises(String searchRequest) {
 
-        if (user.isEmpty()) {
+        if (searchRequest == null) {
             return null; // change to an exception later
         }
 
-        exercise.setUser(user.get());
-        exerciseRepository.save(exercise);
-        return exerciseMapper.toResponse(exercise);
+        User user = authService.getUser();
+
+        Optional<List<Exercise>> exercises =
+                exerciseRepository.findByExerciseNameIgnoreCaseContainingAndUserId(searchRequest, user.getId());
+
+        List<ExerciseResponse> exercisesResponse = new ArrayList<>();
+
+        if (exercises.isEmpty()) {
+            return null; // change to an exception later
+        }
+
+        for (Exercise exercise : exercises.get()) {
+            exercisesResponse.add(exerciseMapper.toResponse(exercise));
+        }
+
+        return exercisesResponse;
     }
 
     public List<String> getAllMuscleGroups() {
         return exerciseRepository.getAllMuscleGroups();
     }
 
-    public List<Exercise> getExercisesByMuscleGroup(String muscleGroup) {
+    public List<ExerciseResponse> getExercisesByMuscleGroup(String muscleGroup) {
 
         if (muscleGroup.isEmpty()) {
             return null; // change to an exception later
@@ -71,7 +89,13 @@ public class ExerciseService {
             return null; // change to an exception later
         }
 
-        return exercises.get();
+        List<ExerciseResponse> exercisesResponse = new ArrayList<>();
+
+        for (Exercise exercise : exercises.get()) {
+            exercisesResponse.add(exerciseMapper.toResponse(exercise));
+        }
+
+        return exercisesResponse;
     }
 
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +54,20 @@ public class AuthService {
         user.setExercises(exerciseList);
 
         userRepository.save(user);
+    }
+
+    public User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
+            return null; // change to an exception later
+        }
+
+        return user.get();
     }
 
     public boolean isAuthenticated() {

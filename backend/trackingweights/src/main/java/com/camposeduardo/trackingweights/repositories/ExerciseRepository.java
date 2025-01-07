@@ -16,4 +16,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
 
     @Query(value = "SELECT name FROM muscle_group", nativeQuery = true)
     List<String> getAllMuscleGroups();
+
+    Optional<List<Exercise>> findByExerciseNameIgnoreCaseContainingAndUserId(String exerciseName, int userId);
 }
