@@ -6,10 +6,12 @@
   <div class="container progress-bg rounded-4">
     <div class="d-flex justify-content-center mb-3">
       <div class="input-group mt-4 w-100 w-md-75 w-lg-50 ">
-        <input type="text" class="form-control border border-1 border-black" placeholder="Search exercise" aria-label="Search exercise">
+        <input #searchInputElement type="text" class="form-control border border-1 border-black"
+          placeholder="Search exercise" aria-label="Search exercise">
 
         <div class="input-group-append">
-          <button class="btn btn-primary" type="button">Search</button>
+          <button class="btn btn-primary" type="button"
+            (click)="onSearchExerciseButton(searchInputElement.value)">Search</button>
         </div>
 
         <button class="btn btn-success btn-sm ms-2 mt-2 mt-sm-0" (click)="openDialog()">

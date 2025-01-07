@@ -17,14 +17,13 @@ export class ProgressComponent {
 
   constructor(private dialog: MatDialog, private exerciseService: ExerciseService) { }
 
-  ngOnInit() {
-    this.exerciseService.getAllMuscleGroups().subscribe({
-      next: (muscleGroup) => {
-        if (muscleGroup) {
-          this.exerciseService.getExercisesByMuscleGroup("ABS");
-        }
+  onSearchExerciseButton(value: string) {
+    this.exerciseService.getExercisesRelated(value).subscribe({
+      next: (exercise) => {
+        console.log(exercise)
       }
-    });
+    }
+    );
   }
 
   openDialog(): void {

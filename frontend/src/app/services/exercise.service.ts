@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Exercise } from '../models/Exercise';
 import { environment } from '../../environments/environment.development';
@@ -21,6 +21,24 @@ export class ExerciseService {
 
   getAllMuscleGroups() {
     return this.http.get<any>(`${environment.apiUrl}/exercise/muscleGroups`, { withCredentials: true });
+  }
+
+  getExercisesRelated(exerciseName: string) {
+    const options =
+    {
+      params: new HttpParams().set('search', exerciseName),
+      withCredentials: true,
+    };
+
+    return this.http.get<any>(`${environment.apiUrl}/exercise`,
+      options
+    ).pipe(
+      map(response => {
+        this.cardExerciseDataSubject?.next(response)
+        return response;
+      }), (err) => {
+        return err;
+      });
   }
 
   getExercisesByMuscleGroup(muscleGroup: string) {

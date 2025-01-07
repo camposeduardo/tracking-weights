@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div *ngIf="exercises_data.length === 0; else cards ">
-      <h1 class="text-center">Not found</h1>
+      <h1 class="text-center"><em>To find a saved exercise, click on a muscle group or search for specific exercises.</em></h1>
     </div>
 
     <ng-template #cards>
@@ -18,6 +18,8 @@
 
           <div class="card-body p-2">
             <h6 class="card-title mb-1">{{exercise.exerciseName}}</h6>
+            <p class="mb-1"><em>{{exercise.muscleGroup}}</em></p>
+            <hr>
             <p class="mb-1">Date: <strong>{{exercise.date}}</strong></p>
             <p class="mb-1">Weight: <strong>{{exercise.weight}}</strong></p>
             <p class="mb-1">Reps: <strong>{{exercise.reps}}</strong></p>
