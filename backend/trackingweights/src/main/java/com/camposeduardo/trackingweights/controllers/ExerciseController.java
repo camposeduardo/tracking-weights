@@ -37,4 +37,10 @@ public class ExerciseController {
     public ResponseEntity<List<ExerciseResponse>> getExercises(@RequestParam String search) {
         return ResponseEntity.ok(exerciseService.findExercises(search));
     }
+
+    @DeleteMapping("/delete/{exerciseId}")
+    public ResponseEntity<Void> getExercisesByMuscleGroup(@PathVariable Long exerciseId) {
+        exerciseService.deleteExercise(exerciseId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

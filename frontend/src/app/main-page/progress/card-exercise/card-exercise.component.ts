@@ -25,4 +25,14 @@ export class CardExerciseComponent {
         }
       });
     }
+
+    onDeleteButton(exercise: Exercise) {
+      if (confirm('Tem certeza que deseja excluir este card?')) {
+        this.exerciseService.deleteExercise(exercise.id).subscribe({
+          next: (exercises) => {
+            this.exercises_data = this.exercises_data.filter(card => card.id !== exercise.id);
+          }
+        });
+      }
+    }
 }

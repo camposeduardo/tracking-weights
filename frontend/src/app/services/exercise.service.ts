@@ -51,4 +51,8 @@ export class ExerciseService {
       });
   }
 
+  deleteExercise(exerciseId: number) {
+    return this.http.delete<any>(`${environment.apiUrl}/exercise/delete/${exerciseId}`, { withCredentials: true });
+  }
+
 }

@@ -98,4 +98,19 @@ public class ExerciseService {
         return exercisesResponse;
     }
 
+    public void deleteExercise(Long exerciseId) {
+
+        if (exerciseId == null) {
+            // thrown an exception;
+        }
+
+        Optional<Exercise> tempExercise = exerciseRepository.findById(exerciseId);
+
+        if (tempExercise.isEmpty()) {
+            // thrown an exception;
+        }
+
+        exerciseRepository.delete(tempExercise.get());
+    }
+
 }

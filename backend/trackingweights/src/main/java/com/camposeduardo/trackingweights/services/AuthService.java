@@ -63,11 +63,9 @@ public class AuthService {
 
         Optional<User> user = userRepository.findByEmail(email);
 
-        if (user.isEmpty()) {
-            return null; // change to an exception later
-        }
+        // change to an exception later
+        return user.orElse(null);
 
-        return user.get();
     }
 
     public boolean isAuthenticated() {

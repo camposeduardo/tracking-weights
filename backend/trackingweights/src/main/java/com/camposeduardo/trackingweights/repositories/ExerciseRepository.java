@@ -8,14 +8,14 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
+public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
     @Query("SELECT e FROM Exercise e JOIN e.user u WHERE e.muscleGroup =:muscleGroup AND u.id =:user_id")
     Optional<List<Exercise>> findByMuscleGroup(@Param("muscleGroup") String muscleGroup,
-                                               @Param("user_id") Integer userId);
+                                               @Param("user_id") Long userId);
 
     @Query(value = "SELECT name FROM muscle_group", nativeQuery = true)
     List<String> getAllMuscleGroups();
 
-    Optional<List<Exercise>> findByExerciseNameIgnoreCaseContainingAndUserId(String exerciseName, int userId);
+    Optional<List<Exercise>> findByExerciseNameIgnoreCaseContainingAndUserId(String exerciseName, Long userId);
 }
