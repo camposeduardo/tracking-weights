@@ -3,6 +3,8 @@ package com.camposeduardo.trackingweights.services;
 import com.camposeduardo.trackingweights.api.ExerciseResponse;
 import com.camposeduardo.trackingweights.entities.Exercise;
 import com.camposeduardo.trackingweights.entities.User;
+import com.camposeduardo.trackingweights.exceptions.InvalidExerciseException;
+import com.camposeduardo.trackingweights.exceptions.UserNotFoundException;
 import com.camposeduardo.trackingweights.mappers.ExerciseMapper;
 import com.camposeduardo.trackingweights.repositories.ExerciseRepository;
 import com.camposeduardo.trackingweights.repositories.UserRepository;
@@ -28,7 +30,7 @@ public class ExerciseService {
     public ExerciseResponse addExercise(Exercise exercise) {
 
         if (exercise == null) {
-            return null; // change to an exception later
+            throw new InvalidExerciseException();
         }
 
         User user = authService.getUser();
@@ -41,7 +43,7 @@ public class ExerciseService {
     public List<ExerciseResponse> findExercises(String searchRequest) {
 
         if (searchRequest == null) {
-            return null; // change to an exception later
+            return null;
         }
 
         User user = authService.getUser();
@@ -52,7 +54,7 @@ public class ExerciseService {
         List<ExerciseResponse> exercisesResponse = new ArrayList<>();
 
         if (exercises.isEmpty()) {
-            return null; // change to an exception later
+            return null;
         }
 
         for (Exercise exercise : exercises.get()) {
@@ -69,7 +71,7 @@ public class ExerciseService {
     public List<ExerciseResponse> getExercisesByMuscleGroup(String muscleGroup) {
 
         if (muscleGroup.isEmpty()) {
-            return null; // change to an exception later
+            return null;
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -79,14 +81,14 @@ public class ExerciseService {
         Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isEmpty()) {
-            return null; // change to an exception later
+            throw new UserNotFoundException();
         }
 
         Optional<List<Exercise>> exercises = exerciseRepository.findByMuscleGroup(
                 StringUtils.capitalize(muscleGroup), user.get().getId());
 
         if (exercises.isEmpty()) {
-            return null; // change to an exception later
+            return null;
         }
 
         List<ExerciseResponse> exercisesResponse = new ArrayList<>();
@@ -101,13 +103,13 @@ public class ExerciseService {
     public void deleteExercise(Long exerciseId) {
 
         if (exerciseId == null) {
-            // thrown an exception;
+            throw new InvalidExerciseException();
         }
 
         Optional<Exercise> tempExercise = exerciseRepository.findById(exerciseId);
 
         if (tempExercise.isEmpty()) {
-            // thrown an exception;
+            throw new InvalidExerciseException();
         }
 
         exerciseRepository.delete(tempExercise.get());

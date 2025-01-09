@@ -63,8 +63,7 @@ public class AuthService {
 
         Optional<User> user = userRepository.findByEmail(email);
 
-        // change to an exception later
-        return user.orElse(null);
+        return user.orElseThrow(UserNotFoundException::new);
 
     }
 

@@ -19,4 +19,10 @@ public class GlobalExceptionHandler {
         ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT, exception.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
+
+    @ExceptionHandler(InvalidExerciseException.class)
+    public ResponseEntity<ErrorMessage> handleInvalidExerciseException(InvalidExerciseException exception) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+    }
 }
