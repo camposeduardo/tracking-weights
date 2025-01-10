@@ -53,3 +53,45 @@
   transform: scale(1.3);
 }
 
+.custom-modal-header {
+  background-color: #007bff;
+  color: white;
+}
+
+.custom-modal-header .btn-close {
+  color: white;
+  opacity: 0.9;
+}
+
+.custom-modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.custom-weight-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.custom-weight-group .form-control {
+  max-width: 150px;
+}
+
+.custom-weight-group .form-select {
+  max-width: 100px;
+}
+
+.custom-save-button {
+  width: 50%;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
