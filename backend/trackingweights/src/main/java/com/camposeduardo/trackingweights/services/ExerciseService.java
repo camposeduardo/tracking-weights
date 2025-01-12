@@ -1,6 +1,6 @@
 package com.camposeduardo.trackingweights.services;
 
-import com.camposeduardo.trackingweights.api.ExerciseResponse;
+import com.camposeduardo.trackingweights.api.ExerciseDto;
 import com.camposeduardo.trackingweights.entities.Exercise;
 import com.camposeduardo.trackingweights.entities.User;
 import com.camposeduardo.trackingweights.exceptions.InvalidExerciseException;
@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,7 +28,7 @@ public class ExerciseService {
     private final UserRepository userRepository;
     private final ExerciseMapper exerciseMapper;
 
-    public ExerciseResponse addExercise(Exercise exercise) {
+    public ExerciseDto addExercise(Exercise exercise) {
 
         if (exercise == null) {
             throw new InvalidExerciseException();
@@ -40,7 +41,11 @@ public class ExerciseService {
         return exerciseMapper.toResponse(exercise);
     }
 
-    public List<ExerciseResponse> findExercises(String searchRequest) {
+    public Exercise getExerciseById(Long id) {
+        return exerciseRepository.findById(id).orElseThrow(InvalidExerciseException::new);
+    }
+
+    public List<ExerciseDto> findExercises(String searchRequest) {
 
         if (searchRequest == null) {
             return null;
@@ -51,7 +56,7 @@ public class ExerciseService {
         Optional<List<Exercise>> exercises =
                 exerciseRepository.findByExerciseNameIgnoreCaseContainingAndUserId(searchRequest, user.getId());
 
-        List<ExerciseResponse> exercisesResponse = new ArrayList<>();
+        List<ExerciseDto> exercisesResponse = new ArrayList<>();
 
         if (exercises.isEmpty()) {
             return null;
@@ -68,7 +73,7 @@ public class ExerciseService {
         return exerciseRepository.getAllMuscleGroups();
     }
 
-    public List<ExerciseResponse> getExercisesByMuscleGroup(String muscleGroup) {
+    public List<ExerciseDto> getExercisesByMuscleGroup(String muscleGroup) {
 
         if (muscleGroup.isEmpty()) {
             return null;
@@ -91,13 +96,28 @@ public class ExerciseService {
             return null;
         }
 
-        List<ExerciseResponse> exercisesResponse = new ArrayList<>();
+        List<ExerciseDto> exercisesResponse = new ArrayList<>();
 
         for (Exercise exercise : exercises.get()) {
             exercisesResponse.add(exerciseMapper.toResponse(exercise));
         }
 
         return exercisesResponse;
+    }
+
+    public void updateExercise(ExerciseDto exerciseDto) {
+        Exercise tempExercise = this.getExerciseById(exerciseDto.id());
+
+        User user = authService.getUser();
+
+        if (!Objects.equals(user.getId(), tempExercise.getUser().getId())) {
+            // change to a specific exception later
+            throw new RuntimeException("Exercise does not belong to this user");
+        }
+
+        exerciseMapper.updateExerciseFromDto(exerciseDto, tempExercise);
+        exerciseRepository.save(tempExercise);
+
     }
 
     public void deleteExercise(Long exerciseId) {

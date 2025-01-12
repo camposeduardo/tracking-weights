@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Exercise } from '../../../models/Exercise';
 import { ExerciseService } from '../../../services/exercise.service';
 import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'card-exercise',
@@ -24,6 +25,10 @@ export class CardExerciseComponent {
           }
         }
       });
+    }
+
+    onEditButton(exercise: Exercise) {
+
     }
 
     onDeleteButton(exercise: Exercise) {

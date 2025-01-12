@@ -1,6 +1,6 @@
 package com.camposeduardo.trackingweights.controllers;
 
-import com.camposeduardo.trackingweights.api.ExerciseResponse;
+import com.camposeduardo.trackingweights.api.ExerciseDto;
 import com.camposeduardo.trackingweights.entities.Exercise;
 import com.camposeduardo.trackingweights.services.ExerciseService;
 import jakarta.validation.Valid;
@@ -19,12 +19,12 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
 
     @PostMapping("/add")
-    public ResponseEntity<ExerciseResponse> addExercise(@Valid @RequestBody Exercise exercise) {
+    public ResponseEntity<ExerciseDto> addExercise(@Valid @RequestBody Exercise exercise) {
         return ResponseEntity.status(HttpStatus.CREATED).body(exerciseService.addExercise(exercise));
     }
 
     @GetMapping("/{muscleGroup}")
-    public ResponseEntity<List<ExerciseResponse>> getExercisesByMuscleGroup(@PathVariable String muscleGroup) {
+    public ResponseEntity<List<ExerciseDto>> getExercisesByMuscleGroup(@PathVariable String muscleGroup) {
         return ResponseEntity.ok(exerciseService.getExercisesByMuscleGroup(muscleGroup));
     }
 
@@ -34,8 +34,14 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExerciseResponse>> getExercises(@RequestParam String search) {
+    public ResponseEntity<List<ExerciseDto>> getExercises(@RequestParam String search) {
         return ResponseEntity.ok(exerciseService.findExercises(search));
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Void> updateExercise(@Valid @RequestBody ExerciseDto exercise) {
+        exerciseService.updateExercise(exercise);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/delete/{exerciseId}")
