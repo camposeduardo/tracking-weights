@@ -105,7 +105,7 @@ public class ExerciseService {
         return exercisesResponse;
     }
 
-    public void updateExercise(ExerciseDto exerciseDto) {
+    public ExerciseDto updateExercise(ExerciseDto exerciseDto) {
         Exercise tempExercise = this.getExerciseById(exerciseDto.id());
 
         User user = authService.getUser();
@@ -117,6 +117,7 @@ public class ExerciseService {
 
         exerciseMapper.updateExerciseFromDto(exerciseDto, tempExercise);
         exerciseRepository.save(tempExercise);
+        return exerciseDto;
 
     }
 

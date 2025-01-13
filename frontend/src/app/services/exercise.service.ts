@@ -55,4 +55,8 @@ export class ExerciseService {
     return this.http.delete<any>(`${environment.apiUrl}/exercise/delete/${exerciseId}`, { withCredentials: true });
   }
 
+  updateExercise(exercise: Exercise) {
+    return this.http.post<any>(`${environment.apiUrl}/exercise/update`, exercise, { withCredentials: true });
+  }
+
 }

@@ -39,7 +39,7 @@ public class ExerciseController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Void> updateExercise(@Valid @RequestBody ExerciseDto exercise) {
+    public ResponseEntity<ExerciseDto> updateExercise(@Valid @RequestBody ExerciseDto exercise) {
         exerciseService.updateExercise(exercise);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

@@ -18,12 +18,7 @@ export class ProgressComponent {
   constructor(private dialog: MatDialog, private exerciseService: ExerciseService) { }
 
   onSearchExerciseButton(value: string) {
-    this.exerciseService.getExercisesRelated(value).subscribe({
-      next: (exercise) => {
-        console.log(exercise)
-      }
-    }
-    );
+    this.exerciseService.getExercisesRelated(value).subscribe();
   }
 
   openDialog(): void {
