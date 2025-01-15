@@ -19,6 +19,16 @@ export class ExerciseService {
     return this.http.post<any>(`${environment.apiUrl}/exercise/add`, exercise, { withCredentials: true });
   }
 
+  getAllExercises() {
+    return this.http.get<Exercise[]>(`${environment.apiUrl}/exercise/all`, { withCredentials: true }).pipe(
+      map(response => {
+        this.cardExerciseDataSubject?.next(response);
+        return response;
+      }), (err) => {
+        return err;
+      });;
+  }
+
   getAllMuscleGroups() {
     return this.http.get<any>(`${environment.apiUrl}/exercise/muscleGroups`, { withCredentials: true });
   }
@@ -34,7 +44,7 @@ export class ExerciseService {
       options
     ).pipe(
       map(response => {
-        this.cardExerciseDataSubject?.next(response)
+        this.cardExerciseDataSubject?.next(response);
         return response;
       }), (err) => {
         return err;
@@ -44,7 +54,7 @@ export class ExerciseService {
   getExercisesByMuscleGroup(muscleGroup: string) {
     return this.http.get<any>(`${environment.apiUrl}/exercise/${muscleGroup}`, { withCredentials: true }).pipe(
       map(response => {
-        this.cardExerciseDataSubject?.next(response)
+        this.cardExerciseDataSubject?.next(response);
         return response;
       }), (err) => {
         return err;

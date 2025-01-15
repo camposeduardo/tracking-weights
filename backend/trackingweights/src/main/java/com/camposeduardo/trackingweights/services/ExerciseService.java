@@ -41,6 +41,25 @@ public class ExerciseService {
         return exerciseMapper.toResponse(exercise);
     }
 
+    public List<ExerciseDto> getAllExercises() {
+
+        User user = authService.getUser();
+
+        Optional<List<Exercise>> userExercises = exerciseRepository.getAllByUserId(user.getId());
+
+        if (userExercises.isEmpty()) {
+            return null;
+        }
+
+        List<ExerciseDto> exerciseDtos = new ArrayList<>();
+
+        for (Exercise exercise : userExercises.get()) {
+            exerciseDtos.add(exerciseMapper.toResponse(exercise));
+        }
+
+        return exerciseDtos;
+    }
+
     public Exercise getExerciseById(Long id) {
         return exerciseRepository.findById(id).orElseThrow(InvalidExerciseException::new);
     }

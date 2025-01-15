@@ -28,6 +28,11 @@ public class ExerciseController {
         return ResponseEntity.ok(exerciseService.getExercisesByMuscleGroup(muscleGroup));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<ExerciseDto>> getAllExercises() {
+        return ResponseEntity.ok(exerciseService.getAllExercises());
+    }
+
     @GetMapping("/muscleGroups")
     public ResponseEntity<List<String>> getAllMuscleGroups() {
         return ResponseEntity.ok(exerciseService.getAllMuscleGroups());

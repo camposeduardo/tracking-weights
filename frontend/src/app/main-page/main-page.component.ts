@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProgressComponent } from './progress/progress.component';
+import { ExerciseService } from '../services/exercise.service';
 
 @Component({
   selector: 'app-main-page',
@@ -10,4 +11,9 @@ import { ProgressComponent } from './progress/progress.component';
 })
 export class MainPageComponent {
 
+   constructor(private exerciseService: ExerciseService) { }
+
+   ngOnInit() {
+    this.exerciseService.getAllExercises().subscribe();
+   }
 }
